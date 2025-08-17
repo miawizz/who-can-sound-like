@@ -134,6 +134,9 @@
     </div>
   </div>
 
+  <!-- Load shuffle helper -->
+  <script src="shuffle.js"></script>
+
   <script>
     /* One-time courtesy reminder */
     (function(){
@@ -317,12 +320,14 @@
       "A super-sleepy lion grandpa who’s trying to stay awake to play with the grandkids but keeps falling asleep"
     ];
 
+    // Set up non-repeating selection using shuffle.js helper
+    const nextPrompt = makeShuffler(prompts);
+
     function generatePrompt() {
       const output = document.getElementById("prompt");
       output.innerText = "...";
       setTimeout(() => {
-        const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
-        output.innerText = randomPrompt;
+        output.innerText = nextPrompt();
       }, 400);
     }
   </script>
