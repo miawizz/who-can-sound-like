@@ -11,44 +11,47 @@
   <link rel="apple-touch-icon" href="https://www.dropbox.com/scl/fi/52zdcavuv8onkzli5nqb5/WCSLgraphic.png?rlkey=5v4dj1j6qmg218daxx37nbbty&st=p4a8ug87&raw=1">
 
   <style>
+    :root{
+      --cream:#fff9f3; --ink:#3c3c3c; --brand:#127490;
+      --accent:#b24627; --accent-2:#c95e3c; --dash:#f8b934; --muted:#6b7f88;
+    }
     body {
-      background: #fff9f3; /* light warm cream */
+      background: var(--cream);
       font-family: 'Poppins', sans-serif;
       text-align: center;
       padding: 2rem;
-      color: #3c3c3c; /* warm soft charcoal */
+      color: var(--ink);
       margin: 0;
     }
     .logo { max-width: 150px; margin-bottom: 1rem; }
-    h1 {
-      color: #127490; /* teal/blue */
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      font-size: 1.6rem;
-    }
+    h1 { color: var(--brand); margin-bottom: 0.5rem; font-weight: 600; font-size: 1.6rem; }
     #prompt {
       margin: 2rem auto;
       font-size: 1.25rem;
       padding: 1.5rem;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255,255,255,.95);
       border-radius: 16px;
-      border: 2px dashed #f8b934; /* yellow */
+      border: 2px dashed var(--dash);
       max-width: 90%;
       min-height: 120px;
       backdrop-filter: blur(6px);
     }
+    .btns { display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; margin-top:1rem; }
     button {
-      background-color: #b24627; /* orange/red */
-      color: white;
+      background-color: var(--accent);
+      color: #fff;
       border: none;
-      padding: 1rem 2rem;
+      padding: 1rem 1.2rem;
       border-radius: 30px;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       cursor: pointer;
-      margin-top: 1rem;
       font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,.08);
     }
-    button:hover { background-color: #c95e3c; }
+    button:hover { background-color: var(--accent-2); }
+    button[disabled]{ opacity:.5; cursor:not-allowed; }
+    .btn-secondary{ background:#ffe9d6; color:#6b3a28; }
+    .btn-secondary:hover{ background:#ffdcbf; }
 
     .cover {
       margin-top: 2rem;
@@ -57,13 +60,9 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    footer {
-      font-size: 0.9rem; color: #777;
-      margin-top: 3rem; max-width: 90%;
-      margin-left: auto; margin-right: auto;
-    }
+    footer { font-size: .9rem; color: #777; margin-top: 3rem; max-width: 90%; margin-inline:auto; }
 
-    /* One-time courtesy overlay */
+    /* Courtesy overlay (unchanged) */
     #courtesyOverlay {
       position: fixed; inset: 0;
       background: rgba(0,0,0,.4);
@@ -73,22 +72,51 @@
     .courtesy-card {
       width: min(560px, 92%);
       background: #fff;
-      color: #3c3c3c;
+      color: var(--ink);
       border-radius: 18px;
       box-shadow: 0 12px 40px rgba(0,0,0,.18);
       padding: 22px;
       text-align: left;
     }
-    .courtesy-card h2 { margin: 0 0 8px; color: #127490; font-size: 20px; }
+    .courtesy-card h2 { margin: 0 0 8px; color: var(--brand); font-size: 20px; }
     .courtesy-card p { margin: 6px 0 14px; color: #666; }
     .courtesy-check { display:flex; align-items:center; gap:10px; margin: 6px 0 12px; }
     #courtesyContinue {
-      width: 100%; padding: 12px 14px; border: 0;
-      border-radius: 14px; font-weight: 700; cursor: pointer;
-      background: #b24627; color: #fff;
-      box-shadow: 0 4px 14px rgba(0,0,0,.08);
+      width: 100%; padding: 12px 14px; border: 0; border-radius: 14px; font-weight: 700; cursor: pointer;
+      background: var(--accent); color: #fff; box-shadow: 0 4px 14px rgba(0,0,0,.08);
     }
     #courtesyContinue:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* Favorites area */
+    #favWrap{ max-width:860px; margin:2rem auto 0; text-align:left; }
+    #favHeader{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    #favHeader h3{ margin:0; color:#7a3e2e; font-size:1.1rem; }
+    #favList{
+      list-style:none; padding:0; margin:12px 0 0;
+      display:grid; grid-template-columns:1fr; gap:10px;
+    }
+    .favItem{
+      background:#fff; border:1px solid #ffdcbf; border-radius:14px; padding:12px 14px;
+      display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+      box-shadow:0 2px 8px rgba(0,0,0,.04);
+    }
+    .favText{ font-size:.98rem; line-height:1.35rem; }
+    .favActions{ display:flex; gap:8px; flex-shrink:0; }
+    .iconBtn{
+      border:0; background:#ffe9d6; color:#6b3a28; padding:.45rem .7rem; border-radius:10px; font-size:.9rem; cursor:pointer;
+    }
+    .iconBtn:hover{ background:#ffdcbf; }
+    .muted{ color:var(--muted); font-size:.9rem; }
+
+    /* Tiny toast */
+    #toast{
+      position:fixed; left:50%; bottom:24px; transform:translateX(-50%);
+      background:#127490; color:#fff; padding:10px 14px; border-radius:12px;
+      box-shadow:0 8px 24px rgba(0,0,0,.18); opacity:0; pointer-events:none;
+      transition:opacity .25s ease, transform .25s ease;
+      font-size:.95rem; z-index:9999;
+    }
+    #toast.show{ opacity:1; transform:translateX(-50%) translateY(-4px); }
   </style>
 </head>
 <body>
@@ -98,12 +126,10 @@
     <div class="courtesy-card">
       <h2 id="courtesyTitle">Thanks for supporting this work</h2>
       <p>Please do not share this link.</p>
-
       <label class="courtesy-check">
         <input type="checkbox" id="courtesyAck" />
         <span>I understand — got it!</span>
       </label>
-
       <button id="courtesyContinue" disabled>Continue</button>
     </div>
   </section>
@@ -113,11 +139,21 @@
     <img src="WCSLgraphic.png" alt="Who Can Sound Like logo" class="logo" />
     <h1>WHO CAN SOUND LIKE...? from Playful Heart Parenting</h1>
 
-    <button onclick="generatePrompt()">Who can sound like...</button>
-    <div id="prompt">Tap the button to get a random prompt and do your best impression! No wrong answers. Just go for it!</div>
+    <!-- Row 1 -->
+    <div class="btns">
+      <button id="btnNext">Who can sound like…</button>
+    </div>
+    <!-- Row 2 -->
+    <div class="btns">
+      <button id="btnBack">Back</button>
+      <button id="btnFwd">Forward</button>
+    </div>
+    <!-- Row 3 -->
+    <div class="btns">
+      <button id="btnSave" class="btn-secondary">Save to Favorites</button>
+    </div>
 
-    <!-- Optional cover image (fixed broken tag from previous version) -->
-    <!-- <img src="https://www.dropbox.com/scl/fi/52zdcavuv8onkzli5nqb5/WCSLgraphic.png?rlkey=5v4dj1j6qmg218daxx37nbbty&st=p4a8ug87&raw=1" alt="Who Can Sound Like graphic" class="cover" /> -->
+    <div id="prompt">Tap the button to get a random prompt and do your best impression! No wrong answers. Just go for it!</div>
 
     <footer>
       © 2025 Mia Wisinski, Playful Heart Parenting. This app is for personal use only by those who have purchased from Playful Heart Parenting. Please do not share this link publicly or distribute without explicit permission.
@@ -134,8 +170,21 @@
     </div>
   </div>
 
-  <!-- Load shuffle helper -->
-  <script src="shuffle.js"></script>
+  <!-- Favorites list -->
+  <section id="favWrap" aria-labelledby="favTitle">
+    <div id="favHeader">
+      <h3 id="favTitle">Favorites</h3>
+      <div class="btns" style="margin-top:0;">
+        <button class="btn-secondary" id="btnCopyAll">Copy All</button>
+        <button class="btn-secondary" id="btnClear">Clear</button>
+      </div>
+    </div>
+    <p class="muted" id="favEmpty">No favorites yet. Save any you love.</p>
+    <ul id="favList"></ul>
+  </section>
+
+  <!-- Tiny toast -->
+  <div id="toast" role="status" aria-live="polite"></div>
 
   <script>
     /* One-time courtesy reminder */
@@ -290,7 +339,7 @@
       "A gentle breeze blowing through the trees on a spring day",
       "A whole crowd of kids at a playground",
       "Two grumpy rhinos snorting at each other to move over",
-      "A gorilla with a stuffy nose",  
+      "A gorilla with a stuffy nose",
       "An elevator dinging proudly as it stops on each floor",
       "A walrus barking loudly to show off his big tusks",
       "A little peacock who just wants some attention but nobody is listening",
@@ -320,16 +369,172 @@
       "A super-sleepy lion grandpa who’s trying to stay awake to play with the grandkids but keeps falling asleep"
     ];
 
-    // Set up non-repeating selection using shuffle.js helper
-    const nextPrompt = makeShuffler(prompts);
+    /* ---------- Persistent deck shuffle + history + favorites ---------- */
+    const APP_NS = 'wcsl';
+    const K = (s)=>`${APP_NS}_${s}`;
+    const KEY_VER=K('ver'), KEY_ORDER=K('order'), KEY_IDX=K('idx'), KEY_HIST=K('hist'), KEY_HPOS=K('hpos'), KEY_FAVS=K('favs');
 
-    function generatePrompt() {
-      const output = document.getElementById("prompt");
-      output.innerText = "...";
-      setTimeout(() => {
-        output.innerText = nextPrompt();
-      }, 400);
+    const elPrompt=document.getElementById('prompt');
+    const btnBack=document.getElementById('btnBack');
+    const btnFwd=document.getElementById('btnFwd');
+    const btnNext=document.getElementById('btnNext');
+    const btnSave=document.getElementById('btnSave');
+
+    const favListEl=document.getElementById('favList');
+    const favEmptyEl=document.getElementById('favEmpty');
+    const btnCopyAll=document.getElementById('btnCopyAll');
+    const btnClear=document.getElementById('btnClear');
+    const toastEl=document.getElementById('toast');
+
+    function hashText(t){ let h=0; for(let i=0;i<t.length;i++) h=(h*31+t.charCodeAt(i))>>>0; return h.toString(36); }
+    function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+    function freshOrder(avoidIdx){
+      const order = shuffle(Array.from({length:prompts.length},(_,i)=>i));
+      if (avoidIdx!=null && prompts.length>1 && order[0]===avoidIdx){
+        const k = 1 + Math.floor(Math.random()*(order.length-1));
+        [order[0],order[k]]=[order[k],order[0]];
+      }
+      return order;
     }
+
+    const PROMPTS_VERSION = hashText(JSON.stringify(prompts));
+    function saveState(s){
+      localStorage.setItem(KEY_VER, PROMPTS_VERSION);
+      localStorage.setItem(KEY_ORDER, JSON.stringify(s.order));
+      localStorage.setItem(KEY_IDX, String(s.idx));
+      localStorage.setItem(KEY_HIST, JSON.stringify(s.history));
+      localStorage.setItem(KEY_HPOS, String(s.hpos));
+    }
+    function loadState(){
+      const ver = localStorage.getItem(KEY_VER);
+      let s = { order:null, idx:0, history:[], hpos:0 };
+      if (ver === PROMPTS_VERSION){
+        try{
+          s.order   = JSON.parse(localStorage.getItem(KEY_ORDER) || 'null');
+          s.idx     = parseInt(localStorage.getItem(KEY_IDX) || '0',10) || 0;
+          s.history = JSON.parse(localStorage.getItem(KEY_HIST) || '[]');
+          s.hpos    = parseInt(localStorage.getItem(KEY_HPOS) || String(s.history.length),10) || s.history.length;
+        }catch{}
+      }
+      if (!Array.isArray(s.order) || s.order.length !== prompts.length){
+        s.order=freshOrder(null); s.idx=0; s.history=[]; s.hpos=0;
+      } else {
+        s.idx  = Math.min(Math.max(0,s.idx), Math.max(0,s.order.length-1));
+        s.hpos = Math.min(Math.max(0,s.hpos), s.history.length);
+        s.history = s.history.filter(n=>Number.isInteger(n) && n>=0 && n<prompts.length);
+      }
+      saveState(s); return s;
+    }
+    let STATE = loadState();
+
+    function show(i){ elPrompt.textContent = prompts[i]; }
+    function updateNav(){ btnBack.disabled = STATE.hpos<=1; btnFwd.disabled = STATE.hpos>=STATE.history.length; }
+    function currentIndex(){
+      if (!STATE.history.length || STATE.hpos===0) return null;
+      return STATE.hpos===STATE.history.length ? STATE.history[STATE.history.length-1] : STATE.history[STATE.hpos-1];
+    }
+    function pickNextFromDeck(){
+      let {order, idx} = STATE;
+      const next = order[idx];
+      idx++;
+      if (idx >= order.length){ const avoid=next; order=freshOrder(avoid); idx=0; }
+      STATE.order=order; STATE.idx=idx;
+      return next;
+    }
+
+    function next(){
+      elPrompt.textContent = 'Here you go...!';
+      setTimeout(()=>{
+        if (STATE.hpos < STATE.history.length) STATE.history.splice(STATE.hpos);
+        const pick = pickNextFromDeck();
+        STATE.history.push(pick);
+        if (STATE.history.length>500) STATE.history.splice(0, STATE.history.length-500);
+        STATE.hpos = STATE.history.length;
+        show(pick); updateNav(); saveState(STATE); updateSaveBtn();
+      }, 300);
+    }
+    function back(){
+      if (STATE.hpos>1){
+        STATE.hpos -= 1;
+        show(STATE.history[STATE.hpos-1]); updateNav(); saveState(STATE); updateSaveBtn();
+      }
+    }
+    function forward(){
+      if (STATE.hpos<STATE.history.length){
+        const idx = STATE.history[STATE.hpos];
+        STATE.hpos += 1;
+        show(idx); updateNav(); saveState(STATE); updateSaveBtn();
+      }
+    }
+
+    /* Favorites */
+    function loadFavs(){ try { return JSON.parse(localStorage.getItem(KEY_FAVS)||'[]'); } catch { return []; } }
+    function saveFavs(list){ localStorage.setItem(KEY_FAVS, JSON.stringify(list)); }
+    let FAVORITES = loadFavs();
+    function isFav(i){ return FAVORITES.includes(i); }
+    function updateSaveBtn(){
+      const i = currentIndex();
+      if (i==null){ btnSave.disabled=true; btnSave.textContent='Save to Favorites'; return; }
+      btnSave.disabled=false; btnSave.textContent = isFav(i) ? 'Saved' : 'Save to Favorites';
+    }
+    function saveCurrent(){
+      const i = currentIndex(); if (i==null) return;
+      if (!isFav(i)){ FAVORITES.push(i); saveFavs(FAVORITES); renderFavs(); toast('Saved to favorites'); updateSaveBtn(); }
+      else { toast('Already in favorites'); }
+    }
+    function removeFav(i){
+      FAVORITES = FAVORITES.filter(n=>n!==i); saveFavs(FAVORITES);
+      renderFavs(); updateSaveBtn(); toast('Removed');
+    }
+    function renderFavs(){
+      favListEl.innerHTML=''; if (!FAVORITES.length){ favEmptyEl.style.display='block'; return; }
+      favEmptyEl.style.display='none';
+      FAVORITES.forEach(i=>{
+        const li=document.createElement('li'); li.className='favItem';
+        const txt=document.createElement('div'); txt.className='favText'; txt.textContent=prompts[i];
+        const actions=document.createElement('div'); actions.className='favActions';
+        const copyBtn=document.createElement('button'); copyBtn.className='iconBtn'; copyBtn.textContent='Copy';
+        copyBtn.onclick=()=>{ navigator.clipboard.writeText(prompts[i]); toast('Copied'); };
+        const delBtn=document.createElement('button'); delBtn.className='iconBtn'; delBtn.textContent='Remove';
+        delBtn.onclick=()=> removeFav(i);
+        actions.appendChild(copyBtn); actions.appendChild(delBtn);
+        li.appendChild(txt); li.appendChild(actions); favListEl.appendChild(li);
+      });
+    }
+    function copyAllFavs(){
+      if (!FAVORITES.length){ toast('No favorites to copy'); return; }
+      const text = FAVORITES.map(i=>prompts[i]).join('\n');
+      navigator.clipboard.writeText(text); toast('Favorites copied');
+    }
+    function clearFavs(){
+      FAVORITES=[]; saveFavs(FAVORITES); renderFavs(); updateSaveBtn(); toast('Favorites cleared');
+    }
+
+    /* Tiny toast */
+    let toastTimer=null;
+    function toast(msg){
+      toastEl.textContent=msg; toastEl.classList.add('show');
+      clearTimeout(toastTimer); toastTimer=setTimeout(()=>toastEl.classList.remove('show'), 1200);
+    }
+
+    /* Wire up */
+    btnNext.addEventListener('click', next);
+    btnBack.addEventListener('click', back);
+    btnFwd .addEventListener('click', forward);
+    btnSave.addEventListener('click', saveCurrent);
+    document.getElementById('btnCopyAll').addEventListener('click', copyAllFavs);
+    document.getElementById('btnClear').addEventListener('click', clearFavs);
+
+    document.addEventListener('keydown', e=>{
+      if (e.key==='Enter') next();
+      if (e.key==='ArrowLeft') back();
+      if (e.key==='ArrowRight') forward();
+      if (e.key.toLowerCase()==='s') saveCurrent();
+    });
+
+    // On load
+    if (STATE.history.length){ STATE.hpos=STATE.history.length; show(STATE.history[STATE.history.length-1]); }
+    updateNav(); renderFavs(); updateSaveBtn(); saveState(STATE);
   </script>
 </body>
 </html>
