@@ -117,9 +117,28 @@
       font-size:.95rem; z-index:9999;
     }
     #toast.show{ opacity:1; transform:translateX(-50%) translateY(-4px); }
+    /* Back to Hub button */
+a.home-button {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  z-index: 10002;
+}
+
   </style>
 </head>
 <body>
+  <a href="https://miawizz.github.io/php-app-hub/" class="home-button">
+  ← Back to Hub
+</a>
+
   <!-- Place this snippet right after <body> in each app -->
 <style>
   /* Minimal, brand‑agnostic styling */
